@@ -12,7 +12,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "HugoPoi\\Notification\\Store\\" : "inc"
+            "HugoPoi\\Notification\\Store\\" : "inc/"
         }
     }
 }
