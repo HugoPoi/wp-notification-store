@@ -11,7 +11,11 @@ class NotificationsStore extends Singleton {
 
 	public function __construct() {
 
-		add_action( 'init', array( $this, 'register_cpt' ), 10 );
+    add_action( 'init', array( $this, 'register_cpt' ), 10 );
+
+		if ( Settings::get()->get_setting( 'storing/general/enable' ) ) {
+			add_action( 'notification/notify/submit', array( $this, 'store_notification' ) );
+		}
 
 	}
 
@@ -55,6 +59,26 @@ class NotificationsStore extends Singleton {
 			'capability_type'     => apply_filters( 'notification/cpt/capability_type', 'post' ),
 			'supports'            => array( 'title', 'editor' )
 		) );
+
+  }
+
+	/**
+	 * Store notification on submit
+	 * @return void
+	 */
+	public function store_notification( $notification ) {
+
+    foreach ( $notification->notification->recipients as $to ) {
+      if($user = get_user_by('email', $to)){
+        wp_insert_post(array(
+          'post_type' => 'notification_stored',
+          'post_title' => $notification->notification->subject,
+          'post_content' => $notification->notification->message,
+          'post_status' => 'pending',
+          'post_author' => $user->ID,
+        ));
+      }
+    }
 
 	}
 
