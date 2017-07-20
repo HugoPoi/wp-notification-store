@@ -39,9 +39,6 @@ and read notifications
 <?php endwhile; wp_reset_postdata(); ?>
 ```
 
-## Example of display
-
-
 ---
 
 * [Notification plugin](https://github.com/Kubitomakita/Notification)
