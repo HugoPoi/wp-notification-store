@@ -18,7 +18,8 @@ This plugin allows to store notification in database sent by [Notification plugi
 = Requirements =
 
 This plugin require at least PHP 5.3.0.
-This plugin require [Advanced Custom Fields](https://wordpress.org/plugins/advanced-custom-fields/).
+This plugin require [Notification plugin](https://wordpress.org/plugins/notification/).
+This plugin require [Advanced Custom Fields plugin](https://wordpress.org/plugins/advanced-custom-fields/).
 
 = Plugin install =
 
