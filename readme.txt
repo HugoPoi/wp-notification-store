@@ -1,7 +1,6 @@
-=== Notification : Signature ===
-Contributors: Kubitomakita
-Donate link: https://www.paypal.me/underDEV/
-Tags: notification, notify, email, mail, signature
+=== Notification : Store ===
+Contributors: HugoPoi
+Tags: notification, notify, store, save, cpt
 Requires at least: 3.6
 Tested up to: 4.8
 Stable tag: 1.0
@@ -12,21 +11,18 @@ Signature support for Notification plugin
 
 == Description ==
 
-This plugin allows to add signature to all emails sent by [Notification plugin](https://wordpress.org/plugins/notification/).
+This plugin allows to store notification in database sent by [Notification plugin](https://wordpress.org/plugins/notification/).
 
 == Installation ==
 
 = Requirements =
 
 This plugin require at least PHP 5.3.0.
+This plugin require [Advanced Custom Fields](https://wordpress.org/plugins/advanced-custom-fields/).
 
 = Plugin install =
 
 Download and install this plugin from Plugins -> Add New admin screen.
-
-== Screenshots ==
-
-1. Signature settings
 
 == Changelog ==
 

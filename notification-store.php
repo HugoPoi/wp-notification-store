@@ -62,11 +62,11 @@ add_action( 'init', 'notifications_store_initialize', 10 );
  */
 function notification_store_activation() {
 
-	if ( version_compare( PHP_VERSION, '5.3', '<' ) || ! is_plugin_active( 'notification/notification.php' ) ) {
+	if ( version_compare( PHP_VERSION, '5.3', '<' ) || ! is_plugin_active( 'notification/notification.php' ) || ! is_plugin_active( 'advanced-custom-fields/acf.php' ) ) {
 
 		deactivate_plugins( plugin_basename( __FILE__ ) );
 
-		wp_die( __( 'This plugin requires PHP in version at least 5.3 and Notification plugin active. WordPress itself <a href="https://wordpress.org/about/requirements/" target="_blank">requires at least PHP 5.6</a>. Please upgrade your PHP version or contact your Server administrator.', 'notification-bbpress' ) );
+		wp_die( __( 'This plugin requires PHP in version at least 5.3, Notification and Advanced Custom Fields plugins active. WordPress itself <a href="https://wordpress.org/about/requirements/" target="_blank">requires at least PHP 5.6</a>. Please upgrade your PHP version or contact your Server administrator.', 'notification-store' ) );
 
 	}
 
