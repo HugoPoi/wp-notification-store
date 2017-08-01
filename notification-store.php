@@ -51,6 +51,7 @@ function notifications_store_initialize() {
    * Init NotificationsStore service
 	 */
   HugoPoi\Notification\Store\NotificationsStore::get();
+  new HugoPoi\Notification\Store\RegisterAcf();
 
 }
 add_action( 'init', 'notifications_store_initialize', 10 );
