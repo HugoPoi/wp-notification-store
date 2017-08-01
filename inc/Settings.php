@@ -28,6 +28,16 @@ class Settings {
 				),
 				'render'   => array( new CoreFields\Checkbox(), 'input' ),
 				'sanitize' => array( new CoreFields\Checkbox(), 'sanitize' ),
+      ) )
+			->add_field( array(
+				'name'     => __( 'Use alternate message', 'notification-store' ),
+				'slug'     => 'use_alternate_message',
+				'default'  => '',
+				'addons'   => array(
+					'label' => __( 'Use alternate message for saving the notification in database.', 'notification-store' )
+				),
+				'render'   => array( new CoreFields\Checkbox(), 'input' ),
+				'sanitize' => array( new CoreFields\Checkbox(), 'sanitize' ),
 			) )
 			->description( __( 'Store notification settings.', 'notification' ) );
 

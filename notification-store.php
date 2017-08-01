@@ -45,16 +45,15 @@ add_action( 'init', 'notification_store_settings_initialize', 5 );
  * Initialize plugin
  * @return void
  */
-function notification_store_processor_initialize() {
+function notifications_store_initialize() {
 
 	/**
-	 * Processor instance
+   * Init NotificationsStore service
 	 */
-  new HugoPoi\Notification\Store\Processor();
   HugoPoi\Notification\Store\NotificationsStore::get();
 
 }
-add_action( 'init', 'notification_store_processor_initialize', 10 );
+add_action( 'init', 'notifications_store_initialize', 10 );
 
 /**
  * Do some check on plugin activation

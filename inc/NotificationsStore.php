@@ -6,6 +6,7 @@
 namespace HugoPoi\Notification\Store;
 
 use underDEV\Utils\Singleton;
+use underDEV\Notification\Settings;
 
 class NotificationsStore extends Singleton {
 
@@ -15,7 +16,10 @@ class NotificationsStore extends Singleton {
 
 		if ( Settings::get()->get_setting( 'storing/general/enable' ) ) {
 			add_action( 'notification/notify/submit', array( $this, 'store_notification' ) );
-		}
+    }
+
+    add_action( 'notification/notify/pre/submit', array( $this, 'disable_email_send') );
+    add_action( 'notification/notify/submit', array( $this, 'clean_filter_email_disable' ) );
 
 	}
 
@@ -66,20 +70,52 @@ class NotificationsStore extends Singleton {
 	 * Store notification on submit
 	 * @return void
 	 */
-	public function store_notification( $notification ) {
+  public function store_notification( $notification ) {
+
+    $alternate_message = get_post_meta($notification->notification_post_id, 'notification_alternate_message', true);
+    if( Settings::get()->get_setting( 'storing/general/use_alternate_message' ) ){
+      $notification->set_message($alternate_message);
+    }
 
     foreach ( $notification->notification->recipients as $to ) {
       if($user = get_user_by('email', $to)){
-        wp_insert_post(array(
+        $notification_stored_id = wp_insert_post(array(
           'post_type' => 'notification_stored',
           'post_title' => $notification->notification->subject,
           'post_content' => $notification->notification->message,
           'post_status' => 'pending',
           'post_author' => $user->ID,
         ));
+
+        if($notification_stored_id){
+          foreach($notification->tags as $tag_name => $tag_value){
+            add_post_meta($notification_stored_id, $tag_name, $tag_value);
+          }
+        }
       }
     }
 
 	}
+
+  public function disable_email_send( $notification ) {
+
+    $disable_email = get_post_meta($notification->notification_post_id, 'disable_email', true);
+
+    if($disable_email){
+      add_filter( 'wp_mail', array( $this, 'filter_wp_mail_empty_to' ) );
+    }
+
+  }
+
+  public function clean_filter_email_disable( $notification ) {
+
+		remove_filter( 'wp_mail', array( $this, 'filter_wp_mail_empty_to' ) );
+
+  }
+
+  public function filter_wp_mail_empty_to( $args ) {
+    $args['to'] = '';
+    return $args;
+  }
 
 }
