@@ -6,7 +6,6 @@
 namespace HugoPoi\Notification\Store;
 
 use underDEV\Utils\Singleton;
-use underDEV\Notification\Settings;
 
 class NotificationsStore extends Singleton {
 
@@ -14,7 +13,7 @@ class NotificationsStore extends Singleton {
 
     add_action( 'init', array( $this, 'register_cpt' ), 10 );
 
-		if ( Settings::get()->get_setting( 'storing/general/enable' ) ) {
+		if ( \underDEV\Notification\Settings::get()->get_setting( 'storing/general/enable' ) ) {
 			add_action( 'notification/notify/submit', array( $this, 'store_notification' ) );
     }
 
@@ -73,7 +72,7 @@ class NotificationsStore extends Singleton {
   public function store_notification( $notification ) {
 
     $alternate_message = get_post_meta($notification->notification_post_id, 'notification_alternate_message', true);
-    if( Settings::get()->get_setting( 'storing/general/use_alternate_message' ) ){
+    if( \underDEV\Notification\Settings::get()->get_setting( 'storing/general/use_alternate_message' ) ){
       $notification->set_message($alternate_message);
     }
 
